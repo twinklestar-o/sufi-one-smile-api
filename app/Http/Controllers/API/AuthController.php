@@ -33,12 +33,6 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // $request->validate([
-        //     "name" => "required|string",
-        //     "email" => "required|string|email|unique:users",
-        //     "password" => "required|confirmed" 
-        // ]);
-
         //response
         return response()->json([
             "status" => true,
@@ -93,4 +87,5 @@ class AuthController extends Controller
             ]);
         }
     }
+    
 }
