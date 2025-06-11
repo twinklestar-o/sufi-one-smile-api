@@ -87,5 +87,17 @@ class AuthController extends Controller
             ]);
         }
     }
+
+    // Logout (GET, Auth Token)
+    public function logout()
+    {
+        // Get Token and delete session
+        request()->user()->tokens()->delete();
+
+        return response()->json([
+            "status" => true,
+            "message" => "User logged out"
+        ]);
+    }
     
 }
