@@ -12,11 +12,12 @@ Route::get('/user', function (Request $request) {
 
 Route::post("register", [AuthController::class, "register"]);
 Route::post("login", [AuthController::class, "login"]);
+Route::get("profile/{id}", [UserController::class, "profile"]);
 
 //Protected Routes
 Route::group([
     "middleware" => ["auth:sanctum"]
 ], function (){
-    Route::get("profile", [UserController::class, "profile"]);
+    Route::get("profile", [UserController::class, "allProfile"]);
     Route::get("logout", [AuthController::class, "logout"]);
 });
