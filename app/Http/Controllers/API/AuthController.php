@@ -12,33 +12,37 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
     public function register(Request $request){
-        $validator = Validator::make($request->all(), [
-            "name" => "required|string",
-            "email" => "required|string|email|unique:users",
-            "password" => "required|confirmed" //password confirmed
-        ]);
+    $validator = Validator::make($request->all(), [
+        "name" => "required|string",
+        "email" => "required|string|email|unique:users",
+        "no_telp" => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+        "password" => "required|confirmed"
+    ]);
 
-        if ($validator->fails()){
-            $errorMessage = $validator->errors()->first();
-            $response = [
-                'status' => false,
-                'message' => $errorMessage,
-            ];
-            return response()->json($response, 401);
-        }
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        //response
+    if ($validator->fails()){
+        $errorMessage = $validator->errors()->first();
         return response()->json([
-            "status" => true,
-            "message" => "User registered succesfully"
-        ]);
+            'status' => false,
+            'message' => $errorMessage,
+        ], 401);
     }
+
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'no_telp' => $request->no_telp,
+        'password' => Hash::make($request->password),
+    ]);
+
+    $token = $user->createToken('register-token')->plainTextToken;
+
+    return response()->json([
+        "status" => true,
+        "message" => "User registered successfully",
+        "token" => $token, // <- pastikan ini dikirim ke Flutter
+    ]);
+}
+
 
     public function login(Request $request)
     {
