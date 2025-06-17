@@ -20,4 +20,5 @@ Route::group([
 ], function (){
     Route::get("profile", [UserController::class, "allProfile"]);
     Route::get("logout", [AuthController::class, "logout"]);
+    Route::post("change-password", [AuthController::class, "changePassword"]);
 });

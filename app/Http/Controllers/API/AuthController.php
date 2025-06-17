@@ -11,37 +11,37 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
-    $validator = Validator::make($request->all(), [
-        "name" => "required|string",
-        "email" => "required|string|email|unique:users",
-        "no_telp" => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-        "password" => "required|confirmed"
-    ]);
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
 
-    if ($validator->fails()){
-        $errorMessage = $validator->errors()->first();
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
         return response()->json([
-            'status' => false,
-            'message' => $errorMessage,
-        ], 401);
+            'status' => true,
+            'message' => 'User registered and logged in successfully',
+            'token' => $token,
+            'user' => $user
+        ]);
     }
-
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'no_telp' => $request->no_telp,
-        'password' => Hash::make($request->password),
-    ]);
-
-    $token = $user->createToken('register-token')->plainTextToken;
-
-    return response()->json([
-        "status" => true,
-        "message" => "User registered successfully",
-        "token" => $token, // <- pastikan ini dikirim ke Flutter
-    ]);
-}
 
 
     public function login(Request $request)
@@ -101,6 +101,48 @@ class AuthController extends Controller
         return response()->json([
             "status" => true,
             "message" => "User logged out"
+        ]);
+    }
+
+    // change password (PUT, Auth Token)
+
+    public function changePassword(Request $request)
+    {
+        $user = $request->user();
+        
+        $validator = Validator::make($request->all(), [
+            'passwordLama' => 'required|string|min:6',
+            'passwordBaru' => 'required|string|min:6|different:passwordLama',
+            'passwordBaru_confirmation' => 'required|string|same:passwordBaru',
+        ], [
+            'passwordBaru.different' => 'Password baru harus berbeda dengan password lama',
+            'passwordBaru_confirmation.same' => 'Konfirmasi password baru tidak cocok',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()->first(),
+            ], 422);
+        }
+
+        if (!Hash::check($request->passwordLama, $user->password)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Password lama tidak sesuai',
+            ], 401);
+        }
+
+        $user->password = Hash::make($request->passwordBaru);
+        $user->save();
+
+        // Buat token baru tanpa menghapus token lama
+        $newToken = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Password berhasil diubah',
+            'token' => $newToken, // Kirim token baru ke client
         ]);
     }
     

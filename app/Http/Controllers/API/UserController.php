@@ -21,7 +21,7 @@ class UserController extends Controller
 
     //Get User Profile by user id (GET, Auth Token)
      public function profile($id){
-        $userData =User::find($id);
+        $userData = User::find($id);
         
         return response()->json([
             "status" => true,
