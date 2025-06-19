@@ -34,10 +34,8 @@ Route::group([
 });
 
 //Routes untuk direct visit
-// routes/api.php
-Route::get('/areas',    [DropdownController::class,'areas']);
-Route::get('/branches', [DropdownController::class,'branches']); // ?area_code=...
-Route::get('/products', [DropdownController::class,'products']);
-Route::get('/dealers',  [DropdownController::class,'dealers']);  // ?q=...
-
-Route::post('/direct-visit', [DirectVisitController::class,'store']);
+// Route::get('areas',     [MasterController::class,'areas']);
+// Route::get('branches',  [MasterController::class,'branches']);  // menerima ?area_code=
+// Route::get('products',  [MasterController::class,'products']);
+// Route::get('dealers',   [MasterController::class,'dealers']);   // menerima ?query=
+Route::post('/direct-visit', [DirectVisitController::class, 'store']);
