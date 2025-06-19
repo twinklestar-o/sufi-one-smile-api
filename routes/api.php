@@ -8,6 +8,8 @@ use Database\Seeders\JabatanSeeder;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\DropdownController;
+use App\Http\Controllers\API\DirectVisitController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -26,6 +28,16 @@ Route::group([
     Route::get("profile", [UserController::class, "allProfile"]);
     Route::get("logout", [AuthController::class, "logout"]);
     Route::post("change-password", [AuthController::class, "changePassword"]);
+
     Route::post("collection/add", [CollectionController::class, "addCollection"]);
     Route::post("jabatan/add", [JabatanController::class, "addJabatan"]);
 });
+
+//Routes untuk direct visit
+// routes/api.php
+Route::get('/areas',    [DropdownController::class,'areas']);
+Route::get('/branches', [DropdownController::class,'branches']); // ?area_code=...
+Route::get('/products', [DropdownController::class,'products']);
+Route::get('/dealers',  [DropdownController::class,'dealers']);  // ?q=...
+
+Route::post('/direct-visit', [DirectVisitController::class,'store']);
