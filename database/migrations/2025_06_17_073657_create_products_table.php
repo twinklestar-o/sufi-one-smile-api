@@ -16,7 +16,7 @@ public function up()
 {
     if (! Schema::hasTable('products')) {
          Schema::create('products', function (Blueprint $table) {
-        $table->char('code',4)->primary();
+        $table->char('code',20)->primary();
         $table->string('name',50);
         $table->timestamps();
     });

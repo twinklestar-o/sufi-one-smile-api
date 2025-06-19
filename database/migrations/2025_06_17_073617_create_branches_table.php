@@ -12,10 +12,14 @@ return new class extends Migration
     
 public function up()
 {
-    if (! Schema::hasTable('branches')) {
-       Schema::create('branches', function (Blueprint $table) {
-            $table->id();
+    if (!Schema::hasTable('branches')) {
+        Schema::create('branches', function (Blueprint $table) {
+            $table->char('code', 20)->primary();
+            $table->char('area_code', 20)->nullable(); 
+            $table->string('name', 150);
             $table->timestamps();
+
+            $table->foreign('area_code')->references('code')->on('areas')->onDelete('cascade');
         });
     }
 }

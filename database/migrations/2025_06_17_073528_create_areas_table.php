@@ -13,7 +13,7 @@ public function up()
 {
     if (! Schema::hasTable('areas')) {
         Schema::create('areas', function (Blueprint $table) {
-            $table->char('code',4)->primary();
+            $table->char('code',20)->primary();
             $table->string('name',100);
             $table->timestamps();
         });

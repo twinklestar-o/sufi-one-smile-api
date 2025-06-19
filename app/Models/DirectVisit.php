@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
+
 class DirectVisit extends Model
 {
 protected $table = 'direct_visit';
