@@ -33,9 +33,10 @@ Route::group([
     Route::post("jabatan/add", [JabatanController::class, "addJabatan"]);
 });
 
-//Routes untuk direct visit
-// Route::get('areas',     [MasterController::class,'areas']);
-// Route::get('branches',  [MasterController::class,'branches']);  // menerima ?area_code=
-// Route::get('products',  [MasterController::class,'products']);
-// Route::get('dealers',   [MasterController::class,'dealers']);   // menerima ?query=
-Route::post('/direct-visit', [DirectVisitController::class, 'store']);
+
+Route::get('areas',     [DropdownController::class,'areas']);
+Route::get('branches',  [DropdownController::class,'branches']);
+Route::get('products',  [DropdownController::class,'products']);
+Route::get('dealers',   [DropdownController::class,'dealers']);
+
+Route::post('direct-visit', [DirectVisitController::class,'store']);

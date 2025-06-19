@@ -9,16 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-public function up()
-{
-    if (! Schema::hasTable('areas')) {
+    public function up(): void
+    {
         Schema::create('areas', function (Blueprint $table) {
-            $table->char('code',20)->primary();
-            $table->string('name',100);
-            $table->timestamps();
-        });
+  $table->char('code', 2)->primary();
+  $table->string('name',100);
+  $table->timestamps();
+});
     }
-}
 
     /**
      * Reverse the migrations.
