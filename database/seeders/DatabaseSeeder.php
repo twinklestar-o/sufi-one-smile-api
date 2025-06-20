@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CollectionsSeeder::class,
             JabatanSeeder::class,
+            TypeSeeder::class,
             AreaSeeder::class,
             BranchSeeder::class,
             ProductSeeder::class,
