@@ -10,6 +10,7 @@ use App\Http\controllers\API\TypeController;
 use App\Http\Controllers\API\DropdownController;
 use App\Http\Controllers\API\CollectionController;
 use App\Http\Controllers\API\DirectVisitController;
+use App\Http\Controllers\API\purposeController;
 use Database\Seeders\JabatanSeeder;
 use Database\Seeder\TypeSeeder;
 
@@ -23,6 +24,7 @@ Route::get("profile/{id}", [UserController::class, "profile"]);
 Route::get("jabatan", [JabatanController::class, "allJabatan"]);
 Route::get("type", [TypeController::class, "allType"]); 
 Route::get("collection", [CollectionController::class, "allCollection"]);
+Route::get("purpose", [purposeController::class, "purpose"]);
 
 //Protected Routes
 Route::group([
@@ -33,7 +35,8 @@ Route::group([
     Route::post("change-password", [AuthController::class, "changePassword"]);
     Route::post("collection/add", [CollectionController::class, "addCollection"]);
     Route::post("jabatan/add", [JabatanController::class, "addJabatan"]);
-     Route::post("type/add", [TypeController::class, "addType"]);
+    Route::post("type/add", [TypeController::class, "addType"]);
+    Route::post("purpose/add", [purposeController::class, "addpurpose"]);
 });
 
 

@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             BranchSeeder::class,
             ProductSeeder::class,
             DealerSeeder::class,
+            purpose::class
         ]);
     }
 }
