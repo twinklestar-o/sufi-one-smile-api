@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AreaController;
+use App\Http\Controllers\API\AssetCombinedController;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +12,7 @@ use App\Http\controllers\API\TypeController;
 use App\Http\Controllers\API\DropdownController;
 use App\Http\Controllers\API\CollectionController;
 use App\Http\Controllers\API\DirectVisitController;
+use App\Http\Controllers\API\MsAssetBranchController;
 use App\Http\Controllers\API\purposeController;
 use Database\Seeders\JabatanSeeder;
 use Database\Seeder\TypeSeeder;
@@ -31,6 +33,13 @@ Route::get("purpose", [purposeController::class, "purpose"]);
     Route::get("area", [AreaController::class, "allArea"]);
     Route::post("area/add", [AreaController::class, "addArea"]);
     Route::delete("area/delete/{name}", [AreaController::class, "deleteArea"]);
+
+    Route::get('asset-branches', [MsAssetBranchController::class, 'allAsset']);
+    Route::post('asset-branches/asset', [MsAssetBranchController::class, 'asset']);
+
+// asset-combined/{kode_aset}
+Route::get('asset-combined/{kode_aset}', [AssetCombinedController::class, 'getByKodeAset']);
+Route::get('asset-combined-join/{kode_aset}', [AssetCombinedController::class, 'getByKodeAsetWithJoin']);
 
 //Protected Routes
 Route::group([

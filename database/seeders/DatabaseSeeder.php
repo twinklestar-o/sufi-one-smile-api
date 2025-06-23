@@ -14,14 +14,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            AreaSeeder::class,
             CollectionsSeeder::class,
             JabatanSeeder::class,
             TypeSeeder::class,
-            AreaSeeder::class,
             BranchSeeder::class,
             ProductSeeder::class,
             DealerSeeder::class,
-            purpose::class
+            purpose::class,
+            MsAssetBranchSeeder::class
         ]);
     }
 }
