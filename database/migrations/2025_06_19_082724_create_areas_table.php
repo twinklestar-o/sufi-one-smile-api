@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('areas', function (Blueprint $table) {
-  $table->char('code', 2)->primary();
-  $table->string('name',100);
-  $table->timestamps();
-});
+            $table->char('code', 2)->primary();
+            $table->string('name',100);
+            $table->timestamps();
+        });
     }
 
     /**

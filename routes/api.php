@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AreaController;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,11 @@ Route::get("jabatan", [JabatanController::class, "allJabatan"]);
 Route::get("type", [TypeController::class, "allType"]); 
 Route::get("collection", [CollectionController::class, "allCollection"]);
 Route::get("purpose", [purposeController::class, "purpose"]);
+
+//Area
+    Route::get("area", [AreaController::class, "allArea"]);
+    Route::post("area/add", [AreaController::class, "addArea"]);
+    Route::delete("area/delete/{name}", [AreaController::class, "deleteArea"]);
 
 //Protected Routes
 Route::group([

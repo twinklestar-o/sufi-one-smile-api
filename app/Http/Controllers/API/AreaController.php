@@ -3,29 +3,29 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Jabatan;
+use App\Models\Area;
 use App\Models\Collections;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class JabatanController extends Controller
+class AreaController extends Controller
 {
-    public function allJabatan()
+    public function allArea()
     {
-        $allJabatan = Jabatan::all();
+        $allArea = Area::all();
 
         return response()->json([
             "status" => true,
-            "message" => "Profile Information",
-            "data" => $allJabatan,
+            "message" => "Daftar Area",
+            "data" => $allArea,
         ]);
     }
 
-    public function addJabatan(Request $request)
+    public function addArea(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255|unique:jabatans',
-            'kode' => 'required|string|unique:jabatans|max:50'
+            'code' => 'required|string|unique:areas',
+            'name' => 'required|string|unique:areas|max:50'
         ]);
 
         if ($validator->fails()) {
@@ -36,38 +36,38 @@ class JabatanController extends Controller
             ], 422);
         }
 
-        $jabatan = Jabatan::create([
+        $area = Area::create([
+            'code' => $request->code,
             'name' => $request->name,
-            'kode' => $request->kode,
         ]);
 
-        $this->updateJabatanTimestamp();
+        $this->updateAreaTimestamp();
         
         // Mengambil data collection yang sudah diupdate
         $collection = Collections::find(1); // Sekarang bisa dipanggil secara statis
 
         return response()->json([
             'status' => true,
-            'message' => 'Jabatan telah berhasil ditambahkan',
-            'jabatan' => $jabatan,
+            'message' => 'Area telah berhasil ditambahkan',
+            'area' => $area,
             'collection' => $collection
         ]);
     }
 
-    protected function updateJabatanTimestamp()
+    protected function updateAreaTimestamp()
     {
-        Collections::where('id', 1)->update(['updated_at' => now()]);
+        Collections::where('id', 15)->update(['updated_at' => now()]);
     }
 
-    public function deleteJabatan($id)
+    public function deleteArea($name)
     {
-        $jabatan = Jabatan::find($id);
-        $jabatan->delete();
+        $area = Area::find($name);
+        $area->delete();
         
         return response()->json([
             "status" => true,
-            "message" => "Jabatan telah berhasil dihapus",
-            "data" => $jabatan,
+            "message" => "Area telah berhasil dihapus",
+            "data" => $area,
         ]);
         
     }
