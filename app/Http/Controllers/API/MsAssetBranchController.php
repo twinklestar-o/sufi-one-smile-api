@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
+use App\Models\AssetDetail;
 use App\Models\MsAssetBranch;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,7 @@ class MsAssetBranchController extends Controller
 
         // Cari aset berdasarkan KODE_ASET
         $asset = MsAssetBranch::where('KODE_ASET', $validated['KODE_ASET'])->first();
+        $assetDetails = AssetDetail::where('KODE_ASET', $validated['KODE_ASET'])->first();
 
         if (!$asset) {
             return response()->json([
@@ -36,11 +38,13 @@ class MsAssetBranchController extends Controller
                 'data' => null
             ], 404);
         }
+        $assetDetails = AssetDetail::where('kode_aset', $validated['KODE_ASET'])->first();
 
         return response()->json([
             'success' => true,
             'message' => 'Asset found',
-            'data' => $asset
+            'data' => $asset,
+            'detailAset' => $assetDetails 
         ]);
     }
 
@@ -78,23 +82,67 @@ class MsAssetBranchController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function updateAsset(Request $request, $id)
+    public function updateAsset(Request $request)
     {
-        $asset = MsAssetBranch::find($id);
-        
-        if (!$asset) {
-            return response()->json(['message' => 'Asset not found'], 404);
-        }
-
+        // Validasi input dasar
         $validated = $request->validate([
-            'KODE_ASET' => 'sometimes|string|max:50',
+            'KODE_ASET' => 'required|string|max:50',
+
+            // Validasi field yang bisa diupdate di kedua tabel
+            'LOKASI' => 'sometimes|string|max:255',
             'BRANCH_ID' => 'sometimes|string|max:50',
-            // Tambahkan validasi untuk field lainnya sesuai kebutuhan
+            'DIVISION' => 'sometimes|string|max:100',
+            'POSITION' => 'sometimes|string|max:255', // Contoh field di asset_details
+            'CONDITION' => 'sometimes|string|max:100',
+            'LOC_ROOM' => 'sometimes|string|max:255',
         ]);
 
-        $asset->update($validated);
-        return response()->json($asset);
+        // Cari data MsAssetBranch
+        $asset = MsAssetBranch::where('kode_aset', $validated['KODE_ASET'])->first();
+        if (!$asset) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Asset not found in ms_asset_branches',
+            ], 404);
+        }
+
+        // Cari data AssetDetail
+        $assetDetail = AssetDetail::where('kode_aset', $validated['KODE_ASET'])->first();
+        if (!$assetDetail) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Asset detail not found in asset_details',
+            ], 404);
+        }
+
+        // Update field di MsAssetBranch
+        $asset->update([
+            'lokasi' => $request->input('LOKASI', $asset->lokasi),
+            'branch_id' => $request->input('BRANCH_ID', $asset->branch_id),
+            'division' => $request->input('DIVISION', $asset->division),
+            'last_update' => now(),
+            //'user_update' => auth()->user()->name ?? 'API USER', // opsional
+        ]);
+
+        // Update field di AssetDetail
+        $assetDetail->update([
+            'condition' => $request->input('CONDITION', $assetDetail->condition),
+            'loc_room' => $request->input('LOC_ROOM', $assetDetail->loc_room),
+            'position' => $request->input('POSITION', $assetDetail->position),
+            'last_update' => now(),
+            //'user_update' => auth()->user()->name ?? 'API USER',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Asset and detail updated successfully',
+            'data' => [
+                'ms_asset_branch' => $asset,
+                'asset_detail' => $assetDetail,
+            ]
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.

@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             DealerSeeder::class,
             purpose::class,
-            MsAssetBranchSeeder::class
+            MsAssetBranchSeeder::class,
+            AssetDetailSeeder::class,
         ]);
     }
 }

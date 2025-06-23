@@ -36,10 +36,7 @@ Route::get("purpose", [purposeController::class, "purpose"]);
 
     Route::get('asset-branches', [MsAssetBranchController::class, 'allAsset']);
     Route::post('asset-branches/asset', [MsAssetBranchController::class, 'asset']);
-
-// asset-combined/{kode_aset}
-Route::get('asset-combined/{kode_aset}', [AssetCombinedController::class, 'getByKodeAset']);
-Route::get('asset-combined-join/{kode_aset}', [AssetCombinedController::class, 'getByKodeAsetWithJoin']);
+    Route::put('asset-branches/asset', [MsAssetBranchController::class, 'updateAsset']);
 
 //Protected Routes
 Route::group([
