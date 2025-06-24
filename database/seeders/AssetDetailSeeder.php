@@ -30,6 +30,7 @@ class AssetDetailSeeder extends Seeder
                 'BOK_VAL' => 0,
                 'STATUS' => 'Exist',
                 'NO_INVENTARIS' => 172,
+                'TANGGAL_PEMBELIAN' => '2004-08-10 00:00:00',
                 'TAHUN_PEMBELIAN' => '2004-08-10 00:00:00',
                 'POSITION' => 'No Position',
                 'ACQUISITION_DATE' => '2004-08-10 00:00:00',
@@ -924,8 +925,10 @@ class AssetDetailSeeder extends Seeder
             'USER_UPDATE' => 'user_update',
             'LAST_UPDATE' => 'last_update',
             'ACQUISITION_DATE' => 'acquisition_date',
-            'TAHUN_PEMBELIAN' => 'tahun_pembelian'
+            'TAHUN_PEMBELIAN' => 'tahun_pembelian',
+            'TANGGAL_PEMBELIAN' => 'tanggal_pembelian'
         ];
+        
 
         $result = [];
         foreach ($item as $key => $value) {

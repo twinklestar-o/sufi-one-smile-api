@@ -43,8 +43,10 @@ class MsAssetBranchController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Asset found',
-            'data' => $asset,
-            'detailAset' => $assetDetails 
+             'data' => [
+                'ms_asset_branch' => $asset,
+                'asset_detail' => $assetDetails,
+            ]
         ]);
     }
 
