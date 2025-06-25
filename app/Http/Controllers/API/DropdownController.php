@@ -10,9 +10,14 @@ class DropdownController extends Controller {
     return Area::select('code','name')->get();
   }
   public function branches(Request $r) {
-    return Branch::where('area_code',$r->query('area_code'))
-                 ->select('code','name')->get();
-  }
+    $query = Branch::select('code', 'name', 'area_code', 'created_at', 'updated_at'); // Tambahkan semua kolom yang Anda butuhkan di Flutter
+
+    if ($r->has('area_code')) {
+      $query->where('area_code', $r->query('area_code'));
+    }
+
+    return $query->get(); 
+}
   public function products() {
     return Product::select('code','name')->get();
   }
