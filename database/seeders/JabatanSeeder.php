@@ -13,10 +13,14 @@ class JabatanSeeder extends Seeder
      */
     public function run(): void
     {
-        Jabatan::create(['name' => 'Area Manager', 'kode' => 'AM']);
-        Jabatan::create(['name' => 'Branch Manager', 'kode' => 'BM']);
-        Jabatan::create(['name' => 'DCSM Head', 'kode' => 'DCSMH']);
-        Jabatan::create(['name' => 'Marketing Head', 'kode' => 'MH']);
+        Jabatan::create(['name' => 'BM', 'kode' => 'BM']);
+        Jabatan::create(['name' => 'Direktur', 'kode' => 'Direktur']);
+        Jabatan::create(['name' => 'GM', 'kode' => 'GM']);
+        Jabatan::create(['name' => 'Owner', 'kode' => 'Owner']);
+        Jabatan::create(['name' => 'RM_OM_MM_SM', 'kode' => 'RM_OM_MM_SM']);
+        Jabatan::create(['name' => 'Sales', 'kode' => 'Sales']);
+        Jabatan::create(['name' => 'SH', 'kode' => 'SH']);
+
         
     }
 }

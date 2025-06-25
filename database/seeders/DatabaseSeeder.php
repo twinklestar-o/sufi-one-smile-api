@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AreaSeeder::class,
             CollectionsSeeder::class,
             JabatanSeeder::class,
+            JabatanSFISeeder::class,
             TypeSeeder::class,
             BranchSeeder::class,
             ProductSeeder::class,

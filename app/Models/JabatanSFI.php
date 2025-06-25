@@ -8,11 +8,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 
-class Product extends Model
+class JabatanSFI extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
     protected $fillable = [
         'name',
-        'code'
+        'kode'
     ];
 }

@@ -13,10 +13,12 @@ use App\Http\Controllers\API\DropdownController;
 use App\Http\Controllers\API\CollectionController;
 use App\Http\Controllers\API\DealerController;
 use App\Http\Controllers\API\DirectVisitController;
+use App\Http\Controllers\API\JabatanSFIController;
 use App\Http\Controllers\API\MsAssetBranchController;
 use App\Http\Controllers\API\purposeController;
 use Database\Seeders\JabatanSeeder;
 use Database\Seeder\TypeSeeder;
+use App\Http\Controllers\API\ProductController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -29,6 +31,10 @@ Route::get("jabatan", [JabatanController::class, "allJabatan"]);
 Route::get("type", [TypeController::class, "allType"]); 
 Route::get("collection", [CollectionController::class, "allCollection"]);
 Route::get("purpose", [purposeController::class, "purpose"]);
+Route::get("product", [ProductController::class, "allProduct"]);
+Route::post("product/add", [ProductController::class, "addProduct"]);
+Route::get("jabatansfi", [JabatanSFIController::class, "allJabatanSFI"]);
+
 
 //Area
     Route::get("area", [AreaController::class, "allArea"]);
@@ -50,6 +56,7 @@ Route::group([
     Route::post("jabatan/add", [JabatanController::class, "addJabatan"]);
     Route::post("type/add", [TypeController::class, "addType"]);
     Route::post("purpose/add", [purposeController::class, "addpurpose"]);
+    Route::post("jabatansfi/add", [JabatanSFIController::class, "addJabatanSFI"]);
 });
 
 
