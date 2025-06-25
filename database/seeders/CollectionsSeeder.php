@@ -13,10 +13,13 @@ class CollectionsSeeder extends Seeder
      */
     public function run(): void
     {
-        Collections::create(['name' => 'Jabatan']);
-        Collections::create(['name' => 'Purpose']);
-        Collections::create(['name' => 'Type']);
-        Collections::create(['name' => 'Cabang']);
         Collections::create(['name' => 'Area']);
+        Collections::create(['name' => 'Cabang']);
+        Collections::create(['name' => 'Dealer']);
+        Collections::create(['name' => 'Jabatan']);
+        Collections::create(['name' => 'Jabatan SFI']);
+        Collections::create(['name' => 'Produk']);
+        Collections::create(['name' => 'Tipe Visit']);
+        Collections::create(['name' => 'Tujuan Visit']);
     }
 }

@@ -44,7 +44,7 @@ class BranchController extends Controller
         $this->updateBranchTimestamp();
         
         // Mengambil data collection yang sudah diupdate
-        $collection = Collections::find(1);
+        $collection = Collections::find(2);
 
         return response()->json([
             'status' => true,
@@ -56,6 +56,6 @@ class BranchController extends Controller
 
     protected function updateBranchTimestamp()
     {
-        Collections::where('id', 1)->update(['updated_at' => now()]);
+        Collections::where('id', 2)->update(['updated_at' => now()]);
     }
 }

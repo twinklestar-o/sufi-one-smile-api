@@ -45,7 +45,7 @@ class TypeController extends Controller
         $this->updateTypeTimestamp();
         
         // Mengambil data collection yang sudah diupdate
-        $collection = Collections::find(1);
+        $collection = Collections::find(7);
 
         return response()->json([
             'status' => true,
@@ -57,6 +57,6 @@ class TypeController extends Controller
 
     protected function updateTypeTimestamp()
     {
-        Collections::where('id', 1)->update(['updated_at' => now()]);
+        Collections::where('id', 7)->update(['updated_at' => now()]);
     }
 }

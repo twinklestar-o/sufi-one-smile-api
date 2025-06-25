@@ -45,7 +45,7 @@ class purposeController extends Controller
         $this->updatepurposeTimestamp();
         
         // Mengambil data collection yang sudah diupdate
-        $collection = Collections::find(1); // Sekarang bisa dipanggil secara statis
+        $collection = Collections::find(8); // Sekarang bisa dipanggil secara statis
 
         return response()->json([
             'status' => true,
@@ -57,6 +57,6 @@ class purposeController extends Controller
 
     protected function updatepurposeTimestamp()
     {
-        Collections::where('id', 1)->update(['updated_at' => now()]);
+        Collections::where('id', 8)->update(['updated_at' => now()]);
     }
 }

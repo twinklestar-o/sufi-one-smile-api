@@ -44,7 +44,7 @@ class JabatanController extends Controller
         $this->updateJabatanTimestamp();
         
         // Mengambil data collection yang sudah diupdate
-        $collection = Collections::find(1); // Sekarang bisa dipanggil secara statis
+        $collection = Collections::find(4); // Sekarang bisa dipanggil secara statis
 
         return response()->json([
             'status' => true,
@@ -56,7 +56,7 @@ class JabatanController extends Controller
 
     protected function updateJabatanTimestamp()
     {
-        Collections::where('id', 1)->update(['updated_at' => now()]);
+        Collections::where('id', 4)->update(['updated_at' => now()]);
     }
 
     public function deleteJabatan($id)

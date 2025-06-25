@@ -3,29 +3,29 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Area;
 use App\Models\Collections;
+use App\Models\Dealer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AreaController extends Controller
+class DealerController extends Controller
 {
-    public function allArea()
+    public function allDealer()
     {
-        $allArea = Area::all();
+        $allDealer = Dealer::all();
 
         return response()->json([
             "status" => true,
-            "message" => "Daftar Area",
-            "data" => $allArea,
+            "message" => "Daftar Dealer",
+            "data" => $allDealer,
         ]);
     }
 
-    public function addArea(Request $request)
+    public function addDealer(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'code' => 'required|string|unique:areas',
-            'name' => 'required|string|unique:areas|max:50'
+            'code' => 'required|string|unique:dealers',
+            'name' => 'required|string|unique:dealers|max:50'
         ]);
 
         if ($validator->fails()) {
@@ -36,38 +36,38 @@ class AreaController extends Controller
             ], 422);
         }
 
-        $area = Area::create([
+        $dealer = Dealer::create([
             'code' => $request->code,
             'name' => $request->name,
         ]);
 
-        $this->updateAreaTimestamp();
+        $this->updateDealerTimestamp();
         
         // Mengambil data collection yang sudah diupdate
-        $collection = Collections::find(1); // Sekarang bisa dipanggil secara statis
+        $collection = Collections::find(3); // Sekarang bisa dipanggil secara statis
 
         return response()->json([
             'status' => true,
-            'message' => 'Area telah berhasil ditambahkan',
-            'area' => $area,
+            'message' => 'Dealer telah berhasil ditambahkan',
+            'dealer' => $dealer,
             'collection' => $collection
         ]);
     }
 
-    protected function updateAreaTimestamp()
+    protected function updateDealerTimestamp()
     {
-        Collections::where('id', 1)->update(['updated_at' => now()]);
+        Collections::where('id', 3)->update(['updated_at' => now()]);
     }
 
-    public function deleteArea($name)
+    public function deleteDealer($name)
     {
-        $area = Area::find($name);
-        $area->delete();
+        $dealer = Dealer::find($name);
+        $dealer->delete();
         
         return response()->json([
             "status" => true,
-            "message" => "Area telah berhasil dihapus",
-            "data" => $area,
+            "message" => "Dealer telah berhasil dihapus",
+            "data" => $dealer,
         ]);
         
     }
