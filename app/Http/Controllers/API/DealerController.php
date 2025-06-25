@@ -12,7 +12,7 @@ class DealerController extends Controller
 {
     public function allDealer()
     {
-        $allDealer = Dealer::all();
+        $allDealer = Dealer::orderBy('name', 'asc')->get();
 
         return response()->json([
             "status" => true,

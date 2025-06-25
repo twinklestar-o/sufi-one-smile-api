@@ -66,7 +66,7 @@ Route::get('branch',     [BranchController::class,'allBranch']);
 Route::get('branches',     [DropdownController::class,'branches']);
 
 Route::get('products',  [DropdownController::class,'products']);
-Route::get('dealers',   [DropdownController::class,'dealers']);
+Route::get('dealer',   [DropdownController::class,'dealers']);
 Route::get('dealers',   [DealerController::class,'allDealer']);
 Route::post('dealers/add',   [DealerController::class,'addDealer']);
 
