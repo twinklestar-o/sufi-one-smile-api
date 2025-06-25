@@ -15,6 +15,7 @@ use App\Http\Controllers\API\DealerController;
 use App\Http\Controllers\API\DirectVisitController;
 use App\Http\Controllers\API\JabatanSFIController;
 use App\Http\Controllers\API\MsAssetBranchController;
+use App\Http\Controllers\API\BranchController;
 use App\Http\Controllers\API\purposeController;
 use Database\Seeders\JabatanSeeder;
 use Database\Seeder\TypeSeeder;
@@ -61,7 +62,9 @@ Route::group([
 
 
 Route::get('areas',     [DropdownController::class,'areas']);
-Route::get('branches',  [DropdownController::class,'branches']);
+Route::get('branch',     [BranchController::class,'allBranch']);
+Route::get('branches',     [DropdownController::class,'branches']);
+
 Route::get('products',  [DropdownController::class,'products']);
 Route::get('dealers',   [DropdownController::class,'dealers']);
 Route::get('dealers',   [DealerController::class,'allDealer']);
