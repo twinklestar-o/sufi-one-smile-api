@@ -7,6 +7,36 @@ use Illuminate\Http\Request;
 
 class DirectVisitController extends Controller
 {
+
+    public function showTaskVisitPlanning(Request $request)
+    {
+        $userid = $request->user()->id;
+        
+        return DirectVisit::where('userid', $userid)
+        ->where('status', 0)
+        ->select(
+            'jabatan_saya','area_code','branch_code','product_code','dealer_code',
+            'tipe_visit','tujuan_visit', 'dari_tanggal','sampai_tanggal','tanggal_selesai',
+            'nama_pic','theme_of_discussion','problem','follow_up','description',
+            'photo1_path','photo2_path','latitude','longitude', 'status'
+        )->get();
+    }
+    
+    public function showTaskVisitHistory(Request $request)
+    {
+        $userid = $request->user()->id;
+        
+        return DirectVisit::where('userid', $userid)
+        ->where('status', 1)
+        ->select(
+            'jabatan_saya','area_code','branch_code','product_code','dealer_code',
+            'tipe_visit','tujuan_visit', 'dari_tanggal','sampai_tanggal','tanggal_selesai',
+            'nama_pic','theme_of_discussion','problem','follow_up','description',
+            'photo1_path','photo2_path','latitude','longitude', 'status'
+        )->get();
+    }
+
+
     public function store(Request $request)
     {
         // 1) Validasi semua field, termasuk tipe_visit, tujuan_visit, dan main_persons[]
@@ -34,6 +64,7 @@ class DirectVisitController extends Controller
             'main_persons.*.jabatan'   => 'required_with:main_persons|string|max:50',
             'main_persons.*.nama_pic'  => 'required_with:main_persons|string|max:50',
             'main_persons.*.telp_pic'  => 'required_with:main_persons|string|max:20',
+            'status'              => 'nullable|in:0,1',
         ]);
 
         // 2) Simpan foto ke storage
@@ -61,6 +92,9 @@ class DirectVisitController extends Controller
             'photo2_path'         => $data['photo2_path'],
             'latitude'            => $data['latitude'] ?? null,
             'longitude'           => $data['longitude'] ?? null,
+            'userid'              => $request->user()->id,
+            'status'              => $data['status'] ?? 0,
+            
         ]);
 
         // 4) Simpan main_persons (bila ada)
@@ -77,7 +111,7 @@ class DirectVisitController extends Controller
         // 5) Kembalikan response 201 CREATED
         return response()->json([
             'message' => 'Direct visit created',
-            'id'      => $visit->id,
+            'data'      => $visit,
         ], 201);
     }
 }

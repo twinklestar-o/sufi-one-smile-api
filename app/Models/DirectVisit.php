@@ -25,7 +25,9 @@ class DirectVisit extends Model
     'photo1_path',
     'photo2_path',
     'latitude',
-    'longitude'
+    'longitude',
+    'userid', 
+    'status',
   ];
 
   public function mainPersons()

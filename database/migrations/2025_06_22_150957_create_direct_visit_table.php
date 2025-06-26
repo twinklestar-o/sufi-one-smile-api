@@ -40,6 +40,8 @@ return new class extends Migration
             $table->decimal('latitude', 12, 8)->nullable();
             $table->decimal('longitude', 12, 8)->nullable();
 
+            $table->string('userid', 255);
+            $table->unsignedTinyInteger('status')->default(0); // 0 = Planning, 1 = Selesai
             $table->timestamps();
 
             // ===========

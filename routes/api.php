@@ -58,6 +58,10 @@ Route::group([
     Route::post("type/add", [TypeController::class, "addType"]);
     Route::post("purpose/add", [purposeController::class, "addpurpose"]);
     Route::post("jabatansfi/add", [JabatanSFIController::class, "addJabatanSFI"]);
+
+    Route::post('direct-visit', [DirectVisitController::class,'store']);
+    Route::get('direct-visit/planning', [DirectVisitController::class,'showTaskVisitPlanning']);
+    Route::get('direct-visit/history', [DirectVisitController::class,'showTaskVisitHistory']);
 });
 
 
@@ -70,7 +74,6 @@ Route::get('dealer',   [DropdownController::class,'dealers']);
 Route::get('dealers',   [DealerController::class,'allDealer']);
 Route::post('dealers/add',   [DealerController::class,'addDealer']);
 
-Route::post('direct-visit', [DirectVisitController::class,'store']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('areas', [DropdownController::class, 'areas']);
