@@ -71,3 +71,11 @@ Route::get('dealers',   [DealerController::class,'allDealer']);
 Route::post('dealers/add',   [DealerController::class,'addDealer']);
 
 Route::post('direct-visit', [DirectVisitController::class,'store']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('areas', [DropdownController::class, 'areas']);
+    Route::get('branches', [DropdownController::class, 'branches']);
+    Route::get('products', [DropdownController::class, 'products']);
+    Route::get('dealers', [DropdownController::class, 'dealers']);
+    Route::post('direct-visit', [DirectVisitController::class, 'store']);
+});

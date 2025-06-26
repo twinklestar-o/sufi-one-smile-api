@@ -15,10 +15,10 @@ return new class extends Migration
             $table->string('jabatan_saya', 100);
 
             // FK ke tabel master
-            $table->char('area_code', 2);
-            $table->char('branch_code', 4);
+            $table->char('area_code', 3);
+            $table->char('branch_code', 5);
             $table->char('product_code', 4);
-            $table->string('dealer_code', 15);
+            $table->string('dealer_code', 50);
 
             // tanggal
             $table->date('dari_tanggal');
@@ -37,8 +37,8 @@ return new class extends Migration
             $table->string('photo2_path', 255);
 
             // lokasi
-            $table->decimal('latitude', 10, 6)->nullable();
-            $table->decimal('longitude', 10, 6)->nullable();
+            $table->decimal('latitude', 12, 8)->nullable();
+            $table->decimal('longitude', 12, 8)->nullable();
 
             $table->timestamps();
 

@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('dealers', function (Blueprint $table) {
-            $table->string('code',20)->primary();
-            $table->string('name',150);
+
+            $table->string('code', 50)->primary();
+            $table->string('name', 150);
             $table->timestamps();
         });
-
     }
 
     /**

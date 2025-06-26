@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Area, App\Models\Branch, App\Models\Product, App\Models\Dealer;
+// use App\Models\Area, App\Models\Branch, App\Models\Product, App\Models\Dealer;
+use App\Models\{Area, Branch, Product, Dealer};
 
 class DropdownController extends Controller {
   public function areas() {
