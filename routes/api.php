@@ -35,6 +35,7 @@ Route::get("purpose", [purposeController::class, "purpose"]);
 Route::get("product", [ProductController::class, "allProduct"]);
 Route::post("product/add", [ProductController::class, "addProduct"]);
 Route::get("jabatansfi", [JabatanSFIController::class, "allJabatanSFI"]);
+Route::put('direct-visit/{id}', [DirectVisitController::class, 'update']);
 
 
 //Area
@@ -68,12 +69,10 @@ Route::group([
 Route::get('areas',     [DropdownController::class,'areas']);
 Route::get('branch',     [BranchController::class,'allBranch']);
 Route::get('branches',     [DropdownController::class,'branches']);
-
 Route::get('products',  [DropdownController::class,'products']);
 Route::get('dealer',   [DropdownController::class,'dealers']);
 Route::get('dealers',   [DealerController::class,'allDealer']);
 Route::post('dealers/add',   [DealerController::class,'addDealer']);
-
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('areas', [DropdownController::class, 'areas']);
