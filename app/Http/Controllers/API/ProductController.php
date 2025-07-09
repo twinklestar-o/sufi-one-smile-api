@@ -16,7 +16,7 @@ class ProductController extends Controller
 
         return response()->json([
             "status" => true,
-            "message" => "Profile Information",
+            "message" => "Daftar Produk",
             "data" => $allProduct,
         ]);
     }

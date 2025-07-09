@@ -16,6 +16,7 @@ use App\Http\Controllers\API\DirectVisitController;
 use App\Http\Controllers\API\JabatanSFIController;
 use App\Http\Controllers\API\MsAssetBranchController;
 use App\Http\Controllers\API\BranchController;
+use App\Http\Controllers\API\DamsController;
 use App\Http\Controllers\API\purposeController;
 use Database\Seeders\JabatanSeeder;
 use Database\Seeder\TypeSeeder;
@@ -66,6 +67,9 @@ Route::group([
     Route::put('asset-branches', [MsAssetBranchController::class, 'updateAsset']);
     Route::get('asset-branches', [MsAssetBranchController::class, 'allHistoryStockOpname']);
     Route::get('asset-branches/{id}', [MsAssetBranchController::class, 'updateHistoryStockOpname']);
+
+    // List Master DAMS
+    Route::get('status-asset', [DamsController::class, 'allStatusAsset']);
 
 });
 
