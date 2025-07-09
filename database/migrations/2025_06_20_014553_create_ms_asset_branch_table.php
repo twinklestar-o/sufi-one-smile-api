@@ -41,16 +41,7 @@ return new class extends Migration
             $table->string('branch_type')->nullable();
             $table->string('branch_name')->nullable();
             $table->timestamps();
-            
-            //$table->foreign('kode_aset')->references('kode_aset')->on('ms_asset_details')->onDelete('cascade');
         });
-        // Schema::table('ms_asset_branches', function (Blueprint $table) {
-        // $table->foreign('kode_aset')
-        //     ->references('kode_aset')
-        //     ->on('ms_asset_details')
-        //     ->onDelete('cascade');}
-        // );
-
     }
 
     public function down()
