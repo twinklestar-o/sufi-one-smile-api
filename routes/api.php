@@ -43,7 +43,6 @@ Route::put('direct-visit/{id}', [DirectVisitController::class, 'update']);
     Route::post("area/add", [AreaController::class, "addArea"]);
     Route::delete("area/delete/{name}", [AreaController::class, "deleteArea"]);
 
-    Route::get('asset-branches', [MsAssetBranchController::class, 'allAsset']);
     Route::post('asset-branches/asset', [MsAssetBranchController::class, 'asset']);
     Route::put('asset-branches/asset', [MsAssetBranchController::class, 'updateAsset']);
 
@@ -63,6 +62,11 @@ Route::group([
     Route::post('direct-visit', [DirectVisitController::class,'store']);
     Route::get('direct-visit/planning', [DirectVisitController::class,'showTaskVisitPlanning']);
     Route::get('direct-visit/history', [DirectVisitController::class,'showTaskVisitHistory']);
+
+    Route::put('asset-branches', [MsAssetBranchController::class, 'updateAsset']);
+    Route::get('asset-branches', [MsAssetBranchController::class, 'allHistoryStockOpname']);
+    Route::get('asset-branches/{id}', [MsAssetBranchController::class, 'updateHistoryStockOpname']);
+
 });
 
 
