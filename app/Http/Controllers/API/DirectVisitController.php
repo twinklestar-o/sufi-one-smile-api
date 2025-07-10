@@ -17,6 +17,7 @@ class DirectVisitController extends Controller
         return DirectVisit::where('userid', $userid)
             ->where('status', 0)
             ->select(
+                'id',
                 'jabatan_saya','area_code','branch_code','product_code','dealer_code',
                 'tipe_visit','tujuan_visit', 'dari_tanggal','sampai_tanggal','tanggal_selesai',
                 'nama_pic','theme_of_discussion','problem','follow_up','description',
@@ -31,6 +32,7 @@ class DirectVisitController extends Controller
         return DirectVisit::where('userid', $userid)
             ->where('status', 1)
             ->select(
+                'id',
                 'jabatan_saya','area_code','branch_code','product_code','dealer_code',
                 'tipe_visit','tujuan_visit', 'dari_tanggal','sampai_tanggal','tanggal_selesai',
                 'nama_pic','theme_of_discussion','problem','follow_up','description',
@@ -38,9 +40,9 @@ class DirectVisitController extends Controller
             )->get();
     }
 
-    public function store(Request $request)
-    {
-        // 1) Validasi semua field, termasuk tipe_visit, tujuan_visit, dan main_persons[]
+   public function store(Request $request)
+{
+    try {
         $data = $request->validate([
             'jabatan_saya'        => 'required|string|max:100',
             'area_code'           => 'required|size:2|exists:areas,code',
@@ -68,13 +70,9 @@ class DirectVisitController extends Controller
             'status'              => 'nullable|in:0,1',
         ]);
 
-        // 2) Simpan foto ke storage
         $data['photo1_path'] = $request->file('photo1')->store('photos','public');
-        $data['photo2_path'] = $request->file('photo2')->store('photos','p
-        ublic');
+        $data['photo2_path'] = $request->file('photo2')->store('photos','public');
 
-        // 3) Buat record direc
-        // t_visit
         $visit = DirectVisit::create([
             'jabatan_saya'        => $data['jabatan_saya'],
             'area_code'           => $data['area_code'],
@@ -99,7 +97,6 @@ class DirectVisitController extends Controller
             'status'              => $data['status'] ?? 0,
         ]);
 
-        // 4) Simpan main_persons (bila ada)
         if (!empty($data['main_persons'])) {
             foreach ($data['main_persons'] as $mp) {
                 $visit->mainPersons()->create([
@@ -110,12 +107,18 @@ class DirectVisitController extends Controller
             }
         }
 
-        // 5) Kembalikan response 201 CREATED
         return response()->json([
             'message' => 'Direct visit created',
             'data'    => $visit,
         ], 201);
+    } catch (\Exception $e) {
+        \Log::error('Error submitting direct visit', ['error' => $e->getMessage()]);
+        return response()->json([
+            'error' => 'Error submitting direct visit: ' . $e->getMessage(),
+        ], 500);
     }
+}
+
 
     public function update(Request $request, $id)
     {
