@@ -35,7 +35,7 @@ class AssetDetailSeeder extends Seeder
                 'POSITION' => 'No Position',
                 'ACQUISITION_DATE' => '2004-08-10 00:00:00',
                 'LAST_UPDATE' => '2021-12-01 00:00:00',
-                'USERNAME' => 'NO USER'
+                'USERNAME' => 'No User'
             ],
             [
                 'MS_ASSET_DETAIL_ID' => 3114,
@@ -144,7 +144,7 @@ class AssetDetailSeeder extends Seeder
                 'POSITION' => 'Assistant Manager',
                 'ACQUISITION_DATE' => '2008-02-27 00:00:00',
                 'LAST_UPDATE' => '2021-12-01 00:00:00',
-                'USERNAME' => 'USER'
+                'USERNAME' => 'User'
             ],
             [
                 'MS_ASSET_DETAIL_ID' => 4152,
@@ -163,7 +163,7 @@ class AssetDetailSeeder extends Seeder
                 'POSITION' => 'No Position',
                 'ACQUISITION_DATE' => '2009-08-18 00:00:00',
                 'LAST_UPDATE' => '2021-12-01 00:00:00',
-                'USERNAME' => 'NO USER'
+                'USERNAME' => 'No User'
             ],
             [
                 'MS_ASSET_DETAIL_ID' => 4205,
@@ -254,7 +254,7 @@ class AssetDetailSeeder extends Seeder
                 'POSITION' => 'Back Office Supervisor (ADH, ALL SPV HO)',
                 'ACQUISITION_DATE' => '2013-10-08 00:00:00',
                 'LAST_UPDATE' => '2021-12-01 00:00:00',
-                'USERNAME' => 'USER'
+                'USERNAME' => 'User'
             ],
             [
                 'MS_ASSET_DETAIL_ID' => 4358,
@@ -399,7 +399,7 @@ class AssetDetailSeeder extends Seeder
                 'POSITION' => 'Shared Assets (All Division)',
                 'ACQUISITION_DATE' => '2017-12-14 00:00:00',
                 'LAST_UPDATE' => '2021-12-01 00:00:00',
-                'USERNAME' => 'ALL USER'
+                'USERNAME' => 'All User'
             ],
             [
                 'MS_ASSET_DETAIL_ID' => 5077,
@@ -437,7 +437,7 @@ class AssetDetailSeeder extends Seeder
                 'ACQUISITION_DATE' => '2007-08-14 00:00:00',
                 'LAST_UPDATE' => '2024-02-12 11:11:14',
                 'USER_UPDATE' => 'DWI.SOFI',
-                'USERNAME' => 'USER'
+                'USERNAME' => 'User'
             ],
             [
                 'MS_ASSET_DETAIL_ID' => 5366,
@@ -457,7 +457,7 @@ class AssetDetailSeeder extends Seeder
                 'ACQUISITION_DATE' => '2006-02-17 00:00:00',
                 'LAST_UPDATE' => '2024-01-09 16:01:00',
                 'USER_UPDATE' => 'DWI.SOFI',
-                'USERNAME' => 'ALL USER'
+                'USERNAME' => 'All User'
             ],
             [
                 'MS_ASSET_DETAIL_ID' => 5408,
@@ -603,7 +603,7 @@ class AssetDetailSeeder extends Seeder
                 'ACQUISITION_DATE' => '2005-12-14 00:00:00',
                 'LAST_UPDATE' => '2024-01-09 16:37:21',
                 'USER_UPDATE' => 'DWI.SOFI',
-                'USERNAME' => 'NO USER'
+                'USERNAME' => 'No User'
             ],
             [
                 'MS_ASSET_DETAIL_ID' => 7843,
@@ -623,7 +623,7 @@ class AssetDetailSeeder extends Seeder
                 'ACQUISITION_DATE' => '2006-11-21 00:00:00',
                 'LAST_UPDATE' => '2024-02-12 16:51:50',
                 'USER_UPDATE' => 'DWI.SOFI',
-                'USERNAME' => 'NO USER'
+                'USERNAME' => 'No User'
             ],
             [
                 'MS_ASSET_DETAIL_ID' => 7922,
@@ -715,7 +715,7 @@ class AssetDetailSeeder extends Seeder
                 'ACQUISITION_DATE' => '2008-12-15 00:00:00',
                 'LAST_UPDATE' => '2024-02-12 13:35:11',
                 'USER_UPDATE' => 'DWI.SOFI',
-                'USERNAME' => 'ALL USER'
+                'USERNAME' => 'All User'
             ],
             [
                 'MS_ASSET_DETAIL_ID' => 9580,
@@ -807,7 +807,7 @@ class AssetDetailSeeder extends Seeder
                 'ACQUISITION_DATE' => '2008-11-07 00:00:00',
                 'LAST_UPDATE' => '2024-02-07 16:32:59',
                 'USER_UPDATE' => 'DWI.SOFI',
-                'USERNAME' => 'NO USER'
+                'USERNAME' => 'No User'
             ],
             [
                 'MS_ASSET_DETAIL_ID' => 14805,

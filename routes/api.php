@@ -45,7 +45,7 @@ Route::put('direct-visit/{id}', [DirectVisitController::class, 'update']);
     Route::delete("area/delete/{name}", [AreaController::class, "deleteArea"]);
 
     Route::post('asset-branches/asset', [MsAssetBranchController::class, 'asset']);
-    Route::put('asset-branches/asset', [MsAssetBranchController::class, 'updateAsset']);
+    // Route::put('asset-branches/asset', [MsAssetBranchController::class, 'updateAsset']);
 
 //Protected Routes
 Route::group([

@@ -58,13 +58,13 @@ class MsAssetBranchController extends Controller
             'BOK_VAL' => 'sometimes|string|max:255',
             'NAMA_USER_ASET' => 'sometimes|string|max:255',
             'KETERANGAN' => 'nullable|string|max:255',
-            'STATUS_ASET' => 'sometimes|string|max:255|exists:status-asset,name',
-            'CONDITION' => 'sometimes|string|max:255|exists:kondisi-asset,name',
-            'STATUS_USER' => 'sometimes|string|max:255|exists:status-user-asset,name',
-            'POSITION' => 'sometimes|string|max:255|exists:posisi-user,name',
-            'DIVISION' => 'sometimes|string|max:255|exists:divisi-user,name',
-            'LOC_ROOM' => 'sometimes|string|max:255|exists:lokasi-user,name',
-            'FLOOR' => 'sometimes|string|max:255|exists:lantai-user,name',
+            'STATUS_ASET' => 'sometimes|string|max:255',
+            'CONDITION' => 'sometimes|string|max:255',
+            'STATUS_USER' => 'sometimes|string|max:255',
+            'POSITION' => 'sometimes|string|max:255',
+            'DIVISION' => 'sometimes|string|max:255',
+            'LOC_ROOM' => 'sometimes|string|max:255',
+            'FLOOR' => 'sometimes|string|max:255',
         ], [], [
             'KODE_ASET' => 'Kode Aset',
             'ITEM' => 'Item',
@@ -200,18 +200,18 @@ class MsAssetBranchController extends Controller
         $validator = Validator::make($request->all(), [
             'KODE_ASET' => 'required|string|max:50',
             'ITEM' => 'sometimes|string|max:255',
-            'TANGGAL_PEMBELIAN' => 'sometimes|string|max:255',
+            'TANGGAL_PEMBELIAN' => 'nullable|string|max:255',
             'COST_AC' => 'sometimes|string|max:255',
             'BOK_VAL' => 'sometimes|string|max:255',
             'NAMA_USER_ASET' => 'sometimes|string|max:255',
             'KETERANGAN' => 'nullable|string|max:255',
-            'STATUS_ASET' => 'sometimes|string|max:255|exists:status-asset,name',
-            'CONDITION' => 'sometimes|string|max:255|exists:kondisi-asset,name',
-            'STATUS_USER' => 'sometimes|string|max:255|exists:status-user-asset,name',
-            'POSITION' => 'sometimes|string|max:255|exists:posisi-user,name',
-            'DIVISION' => 'sometimes|string|max:255|exists:divisi-user,name',
-            'LOC_ROOM' => 'sometimes|string|max:255|exists:lokasi-user,name',
-            'FLOOR' => 'sometimes|string|max:255|exists:lantai-user,name',
+            'STATUS_ASET' => 'sometimes|string|max:255',
+            'CONDITION' => 'sometimes|string|max:255',
+            'STATUS_USER' => 'sometimes|string|max:255',
+            'POSITION' => 'sometimes|string|max:255',
+            'DIVISION' => 'sometimes|string|max:255',
+            'LOC_ROOM' => 'sometimes|string|max:255',
+            'FLOOR' => 'sometimes|string|max:255',
         ], [], [
             'KODE_ASET' => 'Kode Aset',
             'ITEM' => 'Item',
@@ -258,12 +258,13 @@ class MsAssetBranchController extends Controller
         }
 
         // Update field di MsAssetBranch
-        $asset->update([    
-            'division' => $request->input('DIVISION', $asset->division),
-            'floor' => $request->input('FLOOR', $asset->floor),
+        $asset->update([
+            'division' => $request->input('DIVISION') ?? $asset->division,
+            'floor' => $request->input('FLOOR') ?? $asset->floor,
             'last_update' => now(),
-            //'user_update' => auth()->user()->name ?? 'API USER', // opsional
+            'user_update' => $request->user()->name,
         ]);
+
 
         // Update field di AssetDetail
         $assetDetail->update([

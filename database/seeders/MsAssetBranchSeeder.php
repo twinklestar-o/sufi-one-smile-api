@@ -87,28 +87,28 @@ class MsAssetBranchSeeder extends Seeder
                 'MS_ASSET_BRANCH_ID' => 2960,
                 'KODE_ASET' => '1065-2-7-1379-0208',
                 'BRANCH_ID' => '1065',
-                'LOKASI' => 'BACK OFFICE ROOM',
+                'LOKASI' => 'Back Office Room',
                 'IS_ACTIVE' => 1,
                 'USER_CREATE' => 'Import Tori',
                 'CREATE_DATE' => '2022-03-21 09:30:13.247',
-                'DIVISION' => 'DIVISI INTERNAL AUDIT & CONTROL',
-                'PERSONAL_LOC' => 'BACK OFFICE ROOM',
-                'DEPT' => 'BACK OFFICE ROOM',
+                'DIVISION' => 'Divisi Internal Audit & Kontrol',
+                'PERSONAL_LOC' => 'Back Office Room',
+                'DEPT' => 'Back Office Room',
                 'FLOOR' => '1 (FIRST) FLOOR',
-                'LOCATION' => 'BACK OFFICE ROOM'
+                'LOCATION' => 'Back Office Room'
             ],
             [
                 'MS_ASSET_BRANCH_ID' => 2921,
                 'KODE_ASET' => '1000-3-21-12997-0809',
                 'BRANCH_ID' => '1000',
-                'LOKASI' => 'BACK OFFICE ROOM',
+                'LOKASI' => 'Back Office Room',
                 'IS_ACTIVE' => 1,
                 'USER_CREATE' => 'Import Tori',
                 'CREATE_DATE' => '2022-03-21 09:30:13.247',
-                'DIVISION' => 'NO DIVISION',
+                'DIVISION' => 'No Division',
                 'PERSONAL_LOC' => 'Back Office Room',
                 'FLOOR' => '2 (SECOND) FLOOR',
-                'LOCATION' => 'BACK OFFICE ROOM'
+                'LOCATION' => 'Back Office Room'
             ],
             [
                 'MS_ASSET_BRANCH_ID' => 2021,
@@ -162,15 +162,15 @@ class MsAssetBranchSeeder extends Seeder
                 'MS_ASSET_BRANCH_ID' => 1325,
                 'KODE_ASET' => '1000-2-7-3354-1013',
                 'BRANCH_ID' => '1000',
-                'LOKASI' => 'BACK OFFICE ROOM',
+                'LOKASI' => 'Back Office Room',
                 'IS_ACTIVE' => 1,
                 'USER_CREATE' => 'Import Tori',
                 'CREATE_DATE' => '2022-03-21 09:30:13.247',
-                'DIVISION' => 'DIVISI INFORMATION TECHNOLOGY',
-                'PERSONAL_LOC' => 'BACK OFFICE ROOM',
-                'DEPT' => 'BACK OFFICE ROOM',
+                'DIVISION' => 'Divisi Information Technology',
+                'PERSONAL_LOC' => 'Back Office Room',
+                'DEPT' => 'Back Office Room',
                 'FLOOR' => '2 (SECOND) FLOOR',
-                'LOCATION' => 'BACK OFFICE ROOM'
+                'LOCATION' => 'Back Office Room'
             ],
             [
                 'MS_ASSET_BRANCH_ID' => 4457,
@@ -260,15 +260,15 @@ class MsAssetBranchSeeder extends Seeder
                 'MS_ASSET_BRANCH_ID' => 7361,
                 'KODE_ASET' => '1000-2-7-16234-1217',
                 'BRANCH_ID' => '1000',
-                'LOKASI' => 'BACK OFFICE ROOM',
+                'LOKASI' => 'Back Office Room',
                 'IS_ACTIVE' => 1,
                 'USER_CREATE' => 'Import Tori',
                 'CREATE_DATE' => '2022-03-21 09:30:13.247',
-                'DIVISION' => 'DIVISI INFORMATION TECHNOLOGY',
-                'PERSONAL_LOC' => 'BACK OFFICE ROOM',
-                'DEPT' => 'BACK OFFICE ROOM',
+                'DIVISION' => 'Divisi Information Technology',
+                'PERSONAL_LOC' => 'Back Office Room',
+                'DEPT' => 'Back Office Room',
                 'FLOOR' => '1 (FIRST) FLOOR',
-                'LOCATION' => 'BACK OFFICE ROOM'
+                'LOCATION' => 'Back Office Room'
             ],
             [
                 'MS_ASSET_BRANCH_ID' => 3388,
@@ -286,27 +286,27 @@ class MsAssetBranchSeeder extends Seeder
                 'MS_ASSET_BRANCH_ID' => 5697,
                 'KODE_ASET' => '1087-3-21-16753-0807',
                 'BRANCH_ID' => '1087',
-                'LOKASI' => 'BACK OFFICE ROOM',
+                'LOKASI' => 'Back Office Room',
                 'IS_ACTIVE' => 1,
                 'USER_CREATE' => 'Import Tori',
                 'CREATE_DATE' => '2022-03-21 09:30:13.247',
-                'DIVISION' => 'OPERATION CABANG',
-                'PERSONAL_LOC' => 'BACK OFFICE ROOM',
+                'DIVISION' => 'Operation Cabang',
+                'PERSONAL_LOC' => 'Back Office Room',
                 'FLOOR' => '2 (SECOND) FLOOR',
-                'LOCATION' => 'BACK OFFICE ROOM'
+                'LOCATION' => 'Back Office Room'
             ],
             [
                 'MS_ASSET_BRANCH_ID' => 5813,
                 'KODE_ASET' => '1032-3-18-8293-0206',
                 'BRANCH_ID' => '1032',
-                'LOKASI' => 'STORAGE/BRANKAS ROOM',
+                'LOKASI' => 'Storage/Brankas Room',
                 'IS_ACTIVE' => 1,
                 'USER_CREATE' => 'Import Tori',
                 'CREATE_DATE' => '2022-03-21 09:30:13.247',
-                'DIVISION' => 'ALL DIVISION',
-                'PERSONAL_LOC' => 'STORAGE/BRANKAS ROOM',
+                'DIVISION' => 'All Division',
+                'PERSONAL_LOC' => 'Storage/Brankas Room',
                 'FLOOR' => '1 (FIRST) FLOOR',
-                'LOCATION' => 'STORAGE/BRANKAS ROOM'
+                'LOCATION' => 'Storage/Brankas Room'
             ],
             [
                 'MS_ASSET_BRANCH_ID' => 1381,
@@ -396,27 +396,27 @@ class MsAssetBranchSeeder extends Seeder
                 'MS_ASSET_BRANCH_ID' => 6771,
                 'KODE_ASET' => '1034-3-28-7479-1205',
                 'BRANCH_ID' => '1034',
-                'LOKASI' => 'STORAGE/BRANKAS ROOM',
+                'LOKASI' => 'Storage/Brankas Room',
                 'IS_ACTIVE' => 1,
                 'USER_CREATE' => 'Import Tori',
                 'CREATE_DATE' => '2022-03-21 09:30:13.247',
-                'DIVISION' => 'NO DIVISION',
-                'PERSONAL_LOC' => 'STORAGE/BRANKAS ROOM',
+                'DIVISION' => 'No Division',
+                'PERSONAL_LOC' => 'Storage/Brankas Room',
                 'FLOOR' => '1 (FIRST) FLOOR',
-                'LOCATION' => 'STORAGE/BRANKAS ROOM'
+                'LOCATION' => 'Storage/Brankas Room'
             ],
             [
                 'MS_ASSET_BRANCH_ID' => 457,
                 'KODE_ASET' => '1053-3-28-9149-1106',
                 'BRANCH_ID' => '1053',
-                'LOKASI' => 'BACK OFFICE ROOM',
+                'LOKASI' => 'Back Office Room',
                 'IS_ACTIVE' => 1,
                 'USER_CREATE' => 'Import Tori',
                 'CREATE_DATE' => '2022-03-21 09:30:13.247',
-                'DIVISION' => 'NO DIVISION',
-                'PERSONAL_LOC' => 'BACK OFFICE ROOM',
+                'DIVISION' => 'No Division',
+                'PERSONAL_LOC' => 'Back Office Room',
                 'FLOOR' => '1 (FIRST) FLOOR',
-                'LOCATION' => 'BACK OFFICE ROOM'
+                'LOCATION' => 'Back Office Room'
             ],
             [
                 'MS_ASSET_BRANCH_ID' => 6288,
@@ -470,14 +470,14 @@ class MsAssetBranchSeeder extends Seeder
                 'MS_ASSET_BRANCH_ID' => 5943,
                 'KODE_ASET' => '1032-3-22-12414-1208',
                 'BRANCH_ID' => '1032',
-                'LOKASI' => 'MEETING ROOM',
+                'LOKASI' => 'Meeting Room',
                 'IS_ACTIVE' => 1,
                 'USER_CREATE' => 'Import Tori',
                 'CREATE_DATE' => '2022-03-21 09:30:13.247',
-                'DIVISION' => 'ALL DIVISION',
-                'PERSONAL_LOC' => 'MEETING ROOM',
+                'DIVISION' => 'All Division',
+                'PERSONAL_LOC' => 'Meeting Room',
                 'FLOOR' => '2 (SECOND) FLOOR',
-                'LOCATION' => 'MEETING ROOM'
+                'LOCATION' => 'Meeting Room'
             ],
             [
                 'MS_ASSET_BRANCH_ID' => 3810,
@@ -531,14 +531,14 @@ class MsAssetBranchSeeder extends Seeder
                 'MS_ASSET_BRANCH_ID' => 2436,
                 'KODE_ASET' => '1076-3-16-012283-1108',
                 'BRANCH_ID' => '1076',
-                'LOKASI' => 'STORAGE/BRANKAS ROOM',
+                'LOKASI' => 'Storage/Brankas Room',
                 'IS_ACTIVE' => 1,
                 'USER_CREATE' => 'Import Tori',
                 'CREATE_DATE' => '2022-03-21 09:30:13.247',
-                'DIVISION' => 'NO DIVISION',
-                'PERSONAL_LOC' => 'STORAGE/BRANKAS ROOM',
+                'DIVISION' => 'No Division',
+                'PERSONAL_LOC' => 'Storage/Brankas Room',
                 'FLOOR' => '1 (FIRST) FLOOR',
-                'LOCATION' => 'STORAGE/BRANKAS ROOM'
+                'LOCATION' => 'Storage/Brankas Room'
             ],
             [
                 'MS_ASSET_BRANCH_ID' => 14805,
@@ -548,7 +548,7 @@ class MsAssetBranchSeeder extends Seeder
                 'IS_ACTIVE' => 1,
                 'USER_CREATE' => 'RACHMA.DWI',
                 'CREATE_DATE' => '2022-06-16 15:55:49.070',
-                'DIVISION' => 'NO DIVISION',
+                'DIVISION' => 'No Division',
                 'PERSONAL_LOC' => '-',
                 'FLOOR' => '-',
                 'LOCATION' => '-'
