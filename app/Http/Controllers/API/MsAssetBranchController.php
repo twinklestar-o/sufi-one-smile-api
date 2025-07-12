@@ -48,6 +48,18 @@ class MsAssetBranchController extends Controller
         return response()->json($assets);
     }
 
+    public function getStockDetail($id)
+    {
+        $stockOpname = StagingAsset::find($id);
+        if (!$stockOpname) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Stock Opname tidak dapat ditemukan',
+            ], 404);
+        }
+        return response()->json($stockOpname);
+    }
+
     public function updateHistoryStockOpname(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
