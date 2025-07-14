@@ -45,4 +45,26 @@ class CollectionController extends Controller
             'collection' => $collection
         ]);
     }
+
+    // app/Http/Controllers/API/CollectionController.php
+public function getLastUpdate() {
+    // Ambil timestamp terbaru dari semua tabel master
+    $lastUpdates = [
+        'areas' => \DB::table('areas')->max('updated_at'),
+        'branches' => \DB::table('branches')->max('updated_at'),
+        'dealers' => \DB::table('dealers')->max('updated_at'),
+        'jabatan' => \DB::table('jabatan')->max('updated_at'),
+        'jabatansfi' => \DB::table('jabatansfi')->max('updated_at'),
+        'products' => \DB::table('products')->max('updated_at'),
+        'types' => \DB::table('types')->max('updated_at'),
+        'purposes' => \DB::table('purposes')->max('updated_at'),
+    ];
+    // Ambil timestamp terbaru
+    $latestUpdate = max(array_filter($lastUpdates));
+    return response()->json([
+        'status' => true,
+        'last_update' => $latestUpdate,
+        'details' => $lastUpdates
+    ]);
+}
 }

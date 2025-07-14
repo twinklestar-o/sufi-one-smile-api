@@ -1,16 +1,11 @@
 <?php
-
 namespace Database\Seeders;
 
 use App\Models\Product;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $products = [
@@ -21,7 +16,12 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($products as $product) {
-            Product::create($product);
+            // Gunakan updateOrCreate untuk handle duplicate
+            Product::updateOrCreate(
+                ['code' => $product['code']], // Kondisi pencarian
+                $product // Data yang akan di-insert/update
+            );
         }
+        echo "Product seeder completed successfully!\n";
     }
 }
