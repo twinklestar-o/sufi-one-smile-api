@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class PosisiUser extends Model
 {
     use HasFactory;
-    protected $table = 'posisi-user-asset';
+    protected $table = 'posisi-user';
 
     protected $fillable = [
         'name',

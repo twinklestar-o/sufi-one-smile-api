@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class DivisiUser extends Model
 {
     use HasFactory;
-    protected $table = 'divisi-user-asset';
+    protected $table = 'divisi-user';
 
     protected $fillable = [
         'name',

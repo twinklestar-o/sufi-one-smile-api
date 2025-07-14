@@ -12,7 +12,7 @@ use App\Models\PosisiUser;
 use App\Models\StatusAsset;
 use App\Models\StatusUserAsset;
 
-class DamsController extends Controller
+class DamsListMasterController extends Controller
 {
     public function allStatusAsset()
     {
@@ -48,7 +48,7 @@ class DamsController extends Controller
         ]);
     }
 
-    public function allPosisiUserAsset()
+    public function allPosisiUser()
     {
         $allPosisiUserAsset = PosisiUser::all();
 
@@ -59,7 +59,7 @@ class DamsController extends Controller
         ]);
     }
 
-    public function allDivisiUserAsset()
+    public function allDivisiUser()
     {
         $allDivisiUserAsset = DivisiUser::all();
 
@@ -70,7 +70,7 @@ class DamsController extends Controller
         ]);
     }
 
-    public function allLokasiUserAsset()
+    public function allLokasiUser()
     {
         $allLokasiUserAsset = LokasiUser::all();
 
@@ -81,7 +81,7 @@ class DamsController extends Controller
         ]);
     }
 
-    public function allLantaiUserAsset()
+    public function allLantaiUser()
     {
         $allLantaiUserAsset = LantaiUser::all();
 

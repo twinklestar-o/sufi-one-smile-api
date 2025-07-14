@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class LantaiUser extends Model
 {
     use HasFactory;
-    protected $table = 'lantai-user-asset';
+    protected $table = 'lantai-user';
 
     protected $fillable = [
         'name',
