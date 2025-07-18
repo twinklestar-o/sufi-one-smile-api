@@ -10,19 +10,17 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            // // AreaSeeder::class,
-            // CollectionsSeeder::class,
-            // JabatanSeeder::class,
-            // JabatanSFISeeder::class,
-            // TypeSeeder::class,
-
-            // purpose::class,
-            // AreaSeeder::class,
-            // BranchSeeder::class,
-            // ProductSeeder::class,
-            // DealerSeeder::class,
-            MsAssetBranchSeeder::class,
+            AreaSeeder::class,
             AssetDetailSeeder::class,
+            BranchSeeder::class,
+            CollectionsSeeder::class,
+            DealerSeeder::class,
+            JabatanSeeder::class,
+            JabatanSFISeeder::class,
+            MsAssetBranchSeeder::class,
+            ProductSeeder::class,
+            purpose::class,
+            TypeSeeder::class,
         ]);
     }
 }
