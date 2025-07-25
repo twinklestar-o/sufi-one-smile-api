@@ -50,16 +50,34 @@ class MsAssetBranchController extends Controller
     }
 
     public function getStockDetail($id)
-    {
-        $stockOpname = StagingAsset::find($id);
-        if (!$stockOpname) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Data Stock Opname tidak dapat ditemukan',
-            ], 404);
-        }
-        return response()->json($stockOpname);
+{
+    $stockOpname = StagingAsset::find($id);
+    $stockOpnameImage = StokopnameImage::find($id);
+
+    if (!$stockOpname || !$stockOpnameImage) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Data Stock Opname tidak dapat ditemukan',
+        ], 404);
     }
+
+    // Ubah full URL agar bisa diakses oleh emulator Flutter (Android)
+    $fullUrl = request()->getScheme() . '://10.0.2.2:8000/storage/' . $stockOpnameImage->img;
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Asset found',
+        'data' => [
+            'staging_asset' => $stockOpname,
+            'stock_opname_image' => array_merge(
+                $stockOpnameImage->toArray(),
+                ['full_image_url' => $fullUrl]
+            )
+        ]
+    ]);
+}
+
+
 
     public function updateHistoryStockOpname(Request $request, $id)
     {
