@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssetDetail;
 use App\Models\MsAssetBranch;
 use App\Models\StagingAsset;
+use App\Models\StokopnameImage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -77,6 +78,7 @@ class MsAssetBranchController extends Controller
             'DIVISION' => 'sometimes|string|max:255',
             'LOC_ROOM' => 'sometimes|string|max:255',
             'FLOOR' => 'sometimes|string|max:255',
+            'IMG' => 'nullable|image|max:2048',
         ], [], [
             'KODE_ASET' => 'Kode Aset',
             'ITEM' => 'Item',
@@ -103,6 +105,9 @@ class MsAssetBranchController extends Controller
 
         $validated = $validator->validated();
 
+        // Simpan file gambar jika ada, atau null jika tidak ada
+        $imgPath = $request->hasFile('IMG') ? $request->file('IMG')->store('photos', 'public') : null;
+
         $asset = MsAssetBranch::where('kode_aset', $validated['KODE_ASET'])->first();
         if (!$asset) {
             return response()->json([
@@ -125,6 +130,14 @@ class MsAssetBranchController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Data Stock Opname not found',
+            ], 404);
+        }
+
+        $stockOpnameImage = StokopnameImage::find($id);
+        if (!$stockOpnameImage) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Stock Opname Image not found',
             ], 404);
         }
 
@@ -166,6 +179,11 @@ class MsAssetBranchController extends Controller
             'updt_usr' => $request->user()->name,
             'period' => $period,
         ]);
+
+        $stockOpnameImage->update([    
+            'img' => $request->input('IMG', $stockOpnameImage->img),
+        ]);
+
     }
 
 
@@ -192,7 +210,6 @@ class MsAssetBranchController extends Controller
                 'data' => null
             ], 404);
         }
-        $assetDetails = AssetDetail::where('kode_aset', $validated['KODE_ASET'])->first();
 
         return response()->json([
             'success' => true,
@@ -217,28 +234,14 @@ class MsAssetBranchController extends Controller
             'BOK_VAL' => 'sometimes|string|max:255',
             'NAMA_USER_ASET' => 'sometimes|string|max:255',
             'KETERANGAN' => 'nullable|string|max:255',
-            'STATUS_ASET' => 'sometimes|string|max:255',
-            'CONDITION' => 'sometimes|string|max:255',
-            'STATUS_USER' => 'sometimes|string|max:255',
-            'POSITION' => 'sometimes|string|max:255',
-            'DIVISION' => 'sometimes|string|max:255',
-            'LOC_ROOM' => 'sometimes|string|max:255',
-            'FLOOR' => 'sometimes|string|max:255',
-        ], [], [
-            'KODE_ASET' => 'Kode Aset',
-            'ITEM' => 'Item',
-            'TANGGAL_PEMBELIAN' => 'Tanggal Pembelian',
-            'COST_AC' => 'Cost AC',
-            'BOK_VAL' => 'Book Value',
-            'NAMA_USER_ASET' => 'Nama User Aset',
-            'KETERANGAN' => 'Keterangan',
-            'STATUS_ASET' => 'Status Aset',
-            'CONDITION' => 'Kondisi',
-            'STATUS_USER' => 'Status User',
-            'POSITION' => 'Posisi',
-            'DIVISION' => 'Divisi',
-            'LOC_ROOM' => 'Ruangan',
-            'FLOOR' => 'Lantai',
+            'STATUS_ASET' => 'sometimes|string|max:255|exists:status-asset,name',
+            'CONDITION' => 'sometimes|string|max:255|exists:kondisi-asset,name',
+            'STATUS_USER' => 'sometimes|string|max:255|exists:status-user-asset,name',
+            'POSITION' => 'sometimes|string|max:255|exists:posisi-user,name',
+            'DIVISION' => 'sometimes|string|max:255|exists:divisi-user,name',
+            'LOC_ROOM' => 'sometimes|string|max:255|exists:lokasi-user,name',
+            'FLOOR' => 'sometimes|string|max:255|exists:lantai-user,name',
+            'IMG' => 'nullable|image|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -250,6 +253,9 @@ class MsAssetBranchController extends Controller
         }
 
         $validated = $validator->validated();
+
+        // Simpan file gambar jika ada, atau null jika tidak ada
+        $imgPath = $request->hasFile('IMG') ? $request->file('IMG')->store('photos', 'public') : null;
 
         // Cari data MsAssetBranch
         $asset = MsAssetBranch::where('kode_aset', $validated['KODE_ASET'])->first();
@@ -269,7 +275,7 @@ class MsAssetBranchController extends Controller
             ], 404);
         }
 
-        // Update field di MsAssetBranch
+        // Update MsAssetBranch
         $asset->update([
             'division' => $request->input('DIVISION') ?? $asset->division,
             'floor' => $request->input('FLOOR') ?? $asset->floor,
@@ -277,15 +283,14 @@ class MsAssetBranchController extends Controller
             'user_update' => $request->user()->name,
         ]);
 
-
-        // Update field di AssetDetail
+        // Update AssetDetail
         $assetDetail->update([
             'item' => $request->input('ITEM', $assetDetail->item),
             'tanggal_pembelian' => $request->input('TANGGAL_PEMBELIAN', $assetDetail->tanggal_pembelian),
             'cost_ac' => $request->input('COST_AC', $assetDetail->cost_ac),
             'bok_val' => $request->input('BOK_VAL', $assetDetail->bok_val),
             'username' => $request->input('NAMA_USER_ASET', $assetDetail->username),
-            'description' => $request->input('KETERANGAN', $assetDetail->description),
+            'add_remark' => $request->input('KETERANGAN', $assetDetail->add_remark),
             'status' => $request->input('STATUS_ASET', $assetDetail->status),
             'condition' => $request->input('CONDITION', $assetDetail->condition),
             'position' => $request->input('POSITION', $assetDetail->position),
@@ -310,7 +315,7 @@ class MsAssetBranchController extends Controller
             'divisi'      => $request->input('DIVISION', $asset->division),
             'lokasi'      => $request->input('LOC_ROOM', ''),
             'lantai'      => $request->input('FLOOR', ''),
-            'remark'      => $request->input('KETERANGAN', $assetDetail->description),
+            'remark'      => $request->input('KETERANGAN', $assetDetail->add_remark),
             'uscrt'       => $request->user()->name,
             'crdt'        => now(),
             'updt_dt'     => now(),
@@ -318,9 +323,21 @@ class MsAssetBranchController extends Controller
             'period'      => $period,
         ]);
 
+        // Tambahkan ke tabel stokopname_images, walaupun imgPath null
+        StokopnameImage::create([
+            'no_stokopname' => $trxNo,
+            'img'           => $imgPath, // bisa null
+            'seq'           => 1,
+            'name'          => '',
+        ]);
 
-        return response()->json($asset);
+        return response()->json([
+            'ms_asset_branch' => $asset,
+            'asset_detail' => $assetDetail,
+        ]);
     }
+
+
 
 
     /**

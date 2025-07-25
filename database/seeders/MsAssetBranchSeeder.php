@@ -107,7 +107,7 @@ class MsAssetBranchSeeder extends Seeder
                 'CREATE_DATE' => '2022-03-21 09:30:13.247',
                 'DIVISION' => 'No Division',
                 'PERSONAL_LOC' => 'Back Office Room',
-                'FLOOR' => '2 (SECOND) FLOOR',
+                'FLOOR' => '2 (Second) Floor',
                 'LOCATION' => 'Back Office Room'
             ],
             [
