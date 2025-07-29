@@ -68,7 +68,7 @@ Route::group([
     Route::put('asset-branches', [MsAssetBranchController::class, 'updateAsset']);
     Route::get('asset-branches', [MsAssetBranchController::class, 'allHistoryStockOpname']);
     Route::get('asset-branches/{id}', [MsAssetBranchController::class, 'getStockDetail']);
-    Route::put('asset-branches/{id}', [MsAssetBranchController::class, 'updateHistoryStockOpname']);
+    Route::put('asset-branches/update/{id}', [MsAssetBranchController::class, 'updateHistoryStockOpname']);
 
     // List Master DAMS
     Route::get('status-asset', [DamsListMasterController::class, 'allStatusAsset']);

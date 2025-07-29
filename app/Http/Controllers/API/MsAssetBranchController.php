@@ -9,6 +9,7 @@ use App\Models\StagingAsset;
 use App\Models\StokopnameImage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MsAssetBranchController extends Controller
 {
@@ -50,37 +51,38 @@ class MsAssetBranchController extends Controller
     }
 
     public function getStockDetail($id)
-{
-    $stockOpname = StagingAsset::find($id);
-    $stockOpnameImage = StokopnameImage::find($id);
+    {
+        $stockOpname = StagingAsset::find($id);
+        $stockOpnameImage = StokopnameImage::find($id);
 
-    if (!$stockOpname || !$stockOpnameImage) {
+        if (!$stockOpname || !$stockOpnameImage) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data Stock Opname tidak dapat ditemukan',
+            ], 404);
+        }
+
+        // Ubah full URL agar bisa diakses oleh emulator Flutter (Android)
+        $fullUrl = request()->getScheme() . '://10.0.2.2:8000/storage/' . $stockOpnameImage->img;
+
         return response()->json([
-            'success' => false,
-            'message' => 'Data Stock Opname tidak dapat ditemukan',
-        ], 404);
+            'success' => true,
+            'message' => 'Asset found',
+            'data' => [
+                'staging_asset' => $stockOpname,
+                'stock_opname_image' => array_merge(
+                    $stockOpnameImage->toArray(),
+                    ['full_image_url' => $fullUrl]
+                )
+            ]
+        ]);
     }
 
-    // Ubah full URL agar bisa diakses oleh emulator Flutter (Android)
-    $fullUrl = request()->getScheme() . '://10.0.2.2:8000/storage/' . $stockOpnameImage->img;
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Asset found',
-        'data' => [
-            'staging_asset' => $stockOpname,
-            'stock_opname_image' => array_merge(
-                $stockOpnameImage->toArray(),
-                ['full_image_url' => $fullUrl]
-            )
-        ]
-    ]);
-}
 
 
-
-    public function updateHistoryStockOpname(Request $request, $id)
+   public function updateHistoryStockOpname(Request $request, $id)
     {
+        // Validasi awal
         $validator = Validator::make($request->all(), [
             'KODE_ASET' => 'required|string|max:50',
             'ITEM' => 'sometimes|string|max:255',
@@ -97,22 +99,8 @@ class MsAssetBranchController extends Controller
             'LOC_ROOM' => 'sometimes|string|max:255',
             'FLOOR' => 'sometimes|string|max:255',
             'IMG' => 'nullable|image|max:2048',
-        ], [], [
-            'KODE_ASET' => 'Kode Aset',
-            'ITEM' => 'Item',
-            'TANGGAL_PEMBELIAN' => 'Tanggal Pembelian',
-            'COST_AC' => 'Cost AC',
-            'BOK_VAL' => 'Book Value',
-            'NAMA_USER_ASET' => 'Nama User Aset',
-            'KETERANGAN' => 'Keterangan',
-            'STATUS_ASET' => 'Status Aset',
-            'CONDITION' => 'Kondisi',
-            'STATUS_USER' => 'Status User',
-            'POSITION' => 'Posisi',
-            'DIVISION' => 'Divisi',
-            'LOC_ROOM' => 'Ruangan',
-            'FLOOR' => 'Lantai',
         ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
@@ -123,89 +111,116 @@ class MsAssetBranchController extends Controller
 
         $validated = $validator->validated();
 
-        // Simpan file gambar jika ada, atau null jika tidak ada
-        $imgPath = $request->hasFile('IMG') ? $request->file('IMG')->store('photos', 'public') : null;
-
-        $asset = MsAssetBranch::where('kode_aset', $validated['KODE_ASET'])->first();
-        if (!$asset) {
+        // Debug awal: pastikan input diterima
+        if (env('APP_DEBUG')) {
             return response()->json([
-                'success' => false,
-                'message' => 'Asset not found',
-            ], 404);
+                'debug' => true,
+                'request_all' => $request->all(),
+                'validated' => $validated,
+                'has_img' => $request->hasFile('IMG'),
+                'img_valid' => $request->hasFile('IMG') ? $request->file('IMG')->isValid() : false,
+                'img_name' => $request->hasFile('IMG') ? $request->file('IMG')->getClientOriginalName() : null,
+            ]);
         }
 
-        // Cari data AssetDetail
-        $assetDetail = AssetDetail::where('kode_aset', $validated['KODE_ASET'])->first();
-        if (!$assetDetail) {
+        DB::beginTransaction();
+
+        try {
+            $asset = MsAssetBranch::where('kode_aset', $validated['KODE_ASET'])->first();
+            if (!$asset) {
+                return response()->json(['success' => false, 'message' => 'Asset not found'], 404);
+            }
+
+            $assetDetail = AssetDetail::where('kode_aset', $validated['KODE_ASET'])->first();
+            if (!$assetDetail) {
+                return response()->json(['success' => false, 'message' => 'Asset detail not found'], 404);
+            }
+
+            $stockOpname = StagingAsset::find($id);
+            if (!$stockOpname) {
+                return response()->json(['success' => false, 'message' => 'Data Stock Opname not found'], 404);
+            }
+
+            $stockOpnameImage = StokopnameImage::find($id);
+            if (!$stockOpnameImage) {
+                return response()->json(['success' => false, 'message' => 'Data Stock Opname Image not found'], 404);
+            }
+
+            // Upload file jika ada
+            $imgPath = $request->hasFile('IMG') && $request->file('IMG')->isValid()
+                ? $request->file('IMG')->store('photos', 'public')
+                : $stockOpnameImage->img;
+
+            // Update MsAssetBranch
+            $asset->update([
+                'division' => $request->input('DIVISION', $asset->division),
+                'floor' => $request->input('FLOOR', $asset->floor),
+                'last_update' => now(),
+            ]);
+
+            // Update AssetDetail
+            $assetDetail->update([
+                'item' => $request->input('ITEM', $assetDetail->item),
+                'tanggal_pembelian' => $request->input('TANGGAL_PEMBELIAN', $assetDetail->tanggal_pembelian),
+                'cost_ac' => $request->input('COST_AC', $assetDetail->cost_ac),
+                'bok_val' => $request->input('BOK_VAL', $assetDetail->bok_val),
+                'username' => $request->input('NAMA_USER_ASET', $assetDetail->username),
+                'description' => $request->input('KETERANGAN', $assetDetail->description),
+                'status' => $request->input('STATUS_ASET', $assetDetail->status),
+                'condition' => $request->input('CONDITION', $assetDetail->condition),
+                'position' => $request->input('POSITION', $assetDetail->position),
+                'last_update' => now(),
+                'user_update' => $request->user()->name,
+            ]);
+
+            // Update StagingAsset
+            $period = $this->generatePeriodDate();
+            $stockOpname->update([
+                'cost' => $request->input('COST_AC', $stockOpname->cost),
+                'book_value' => $request->input('BOK_VAL', $stockOpname->book_value),
+                'username' => $request->input('NAMA_USER_ASET', $stockOpname->username),
+                'status' => $request->input('STATUS_ASET', $stockOpname->status),
+                'kondisi' => $request->input('CONDITION', $stockOpname->kondisi),
+                'posisi' => $request->input('POSITION', $stockOpname->posisi),
+                'divisi' => $request->input('DIVISION', $stockOpname->divisi),
+                'lokasi' => $request->input('LOC_ROOM', $stockOpname->lokasi),
+                'lantai' => $request->input('FLOOR', $stockOpname->lantai),
+                'remark' => $request->input('KETERANGAN', $stockOpname->remark),
+                'updt_dt' => now(),
+                'updt_usr' => $request->user()->name,
+                'period' => $period,
+            ]);
+
+            // Update image
+            $stockOpnameImage->update(['img' => $imgPath]);
+
+            DB::commit();
+
+            // Refresh untuk ambil data terbaru
+            $stockOpname->refresh();
+            $stockOpnameImage->refresh();
+
+            $fullUrl = request()->getScheme() . '://10.0.2.2:8000/storage/' . $stockOpnameImage->img;
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Asset berhasil diupdate',
+                'data' => [
+                    'staging_asset' => $stockOpname,
+                    'stock_opname_image' => array_merge(
+                        $stockOpnameImage->toArray(),
+                        ['full_image_url' => $fullUrl]
+                    )
+                ]
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json([
                 'success' => false,
-                'message' => 'Asset detail not found',
-            ], 404);
+                'message' => 'Update gagal: ' . $e->getMessage(),
+            ], 500);
         }
-
-        $stockOpname = StagingAsset::find($id);
-        if (!$stockOpname) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Data Stock Opname not found',
-            ], 404);
-        }
-
-        $stockOpnameImage = StokopnameImage::find($id);
-        if (!$stockOpnameImage) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Data Stock Opname Image not found',
-            ], 404);
-        }
-
-        $asset->update([    
-            'division' => $request->input('DIVISION', $asset->division),
-            'floor' => $request->input('FLOOR', $asset->floor),
-            'last_update' => now(),
-        ]);
-
-        // Update field di AssetDetail
-        $assetDetail->update([
-            'item' => $request->input('ITEM', $assetDetail->item),
-            'tanggal_pembelian' => $request->input('TANGGAL_PEMBELIAN', $assetDetail->tanggal_pembelian),
-            'cost_ac' => $request->input('COST_AC', $assetDetail->cost_ac),
-            'bok_val' => $request->input('BOK_VAL', $assetDetail->bok_val),
-            'username' => $request->input('NAMA_USER_ASET', $assetDetail->username),
-            'description' => $request->input('KETERANGAN', $assetDetail->description),
-            'status' => $request->input('STATUS_ASET', $assetDetail->status),
-            'condition' => $request->input('CONDITION', $assetDetail->condition),
-            'position' => $request->input('POSITION', $assetDetail->position),
-            'last_update' => now(),
-            'user_update' => $request->user()->name,
-        ]);
-
-        $period = $this->generatePeriodDate();
-
-        $stockOpname->update([
-            'cost' => $request->input('COST_AC', $stockOpname->cost),
-            'book_value' => $request->input('BOK_VAL', $stockOpname->book_value),
-            'username' => $request->input('NAMA_USER_ASET', $stockOpname->username),
-            'status' => $request->input('STATUS_ASET', $stockOpname->status),
-            'kondisi' => $request->input('CONDITION', $stockOpname->kondisi),
-            'posisi' => $request->input('POSITION', $stockOpname->posisi),
-            'divisi' => $request->input('DIVISION', $stockOpname->divisi),
-            'lokasi' => $request->input('DIVISION', $stockOpname->lokasi),
-            'lantai' => $request->input('FLOOR', $stockOpname->lantai),
-            'remark' => $request->input('KETERANGAN', $stockOpname->remark),
-            'updt_dt'=> now(),
-            'updt_usr' => $request->user()->name,
-            'period' => $period,
-        ]);
-
-        $stockOpnameImage->update([    
-            'img' => $request->input('IMG', $stockOpnameImage->img),
-        ]);
-
     }
-
-
-
 
     /**
      * Display the specified resource.
