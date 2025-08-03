@@ -116,7 +116,7 @@ class DirectVisitController extends Controller
             ], 201);
 
         } catch (\Exception $e) {
-            \Log::error('Error submitting direct visit', ['error' => $e->getMessage()]);
+            Log::error('Error submitting direct visit', ['error' => $e->getMessage()]);
             return response()->json([
                 'error' => 'Error submitting direct visit: ' . $e->getMessage(),
             ], 500);
@@ -125,6 +125,7 @@ class DirectVisitController extends Controller
 
     public function update(Request $request, $id)
     {
+        //tes
         // Validasi input data yang dikirim
         $validator = Validator::make($request->all(), [
             'jabatan_saya'        => 'sometimes|string|max:100',
